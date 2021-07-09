@@ -21,15 +21,25 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8,
         trim: true
+    },
+    phone: {
+        type: String,
+        trim: true
+    },
+    role: {
+        type: String,
+        enum: ['user', 'seller'],
+        default: 'user'
     }
 
+    
 }, {timestamps: true}
 )
 
 userSchema.pre("save", async function(next){
 
     //if(this.ismodified('password')) to update password
-    this.password = await bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hashSync(this.password, 10);
     next();
 })
 const user = mongoose.model("User", userSchema);
