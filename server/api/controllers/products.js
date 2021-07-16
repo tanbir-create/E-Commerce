@@ -1,15 +1,15 @@
-const User = require('../models/user');
+
 const Product = require('../models/product');
+const fs = require('fs');
 
 module.exports.addProduct = async function(req, res){
     try {
 
-        
         const {name, price, description} = req.body;
         let images = [];
         if(req.files.length>0){
             images = req.files.map(file => {
-                return { img: file.filename}
+                return {path: file.path}
             })
         }
         const product = new Product({
@@ -21,7 +21,7 @@ module.exports.addProduct = async function(req, res){
             
         });
 
-         const pro= await product.save();
+         await product.save();
          return res.status(200).json({product});
         
      } catch (error) {

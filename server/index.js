@@ -5,7 +5,7 @@ const cors = require('cors');
 const env = require('dotenv');
 env.config();
 
-const passportJWT = require('./config/passport-jwt-strategy');
+// const passportJWT = require('./config/passport-jwt-strategy');
 const db = require('./config/mongoose');
 
 

@@ -20,12 +20,12 @@ module.exports.signup =  async function(req, res){
     
             if(!user){
     
-                
+                const { name,  email, password, phone} = req.body;
                 const newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password,
-                    phone: req.body.phone,
+                    name,
+                    email,
+                    password,
+                    phone,
                     role: 'seller'
                 })
                 

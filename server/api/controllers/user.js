@@ -20,12 +20,12 @@ module.exports.signup =  async function(req, res){
     
             if(!user){
     
-                
+                const { name,  email, password, phone} = req.body;
                 const newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password,
-                    phone: req.body.phone
+                    name,
+                    email,
+                    password,
+                    phone
                 })
                 
                 const registered = await newUser.save();
@@ -74,7 +74,6 @@ module.exports.login = async function(req, res){
                 }
             });
         });
-
     } catch (err) {
         console.log("*****", err);
         return res.status(500, {
