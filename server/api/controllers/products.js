@@ -1,5 +1,6 @@
 
 const Product = require('../models/product');
+const User = require('../models/user')
 const fs = require('fs');
 
 module.exports.addProduct = async function(req, res){
@@ -20,7 +21,6 @@ module.exports.addProduct = async function(req, res){
             seller: req.user.userId
             
         });
-
          await product.save();
          return res.status(200).json({product});
         
@@ -28,3 +28,19 @@ module.exports.addProduct = async function(req, res){
        return res.status(404).json('Error in creating product');
     }
  }
+
+ module.exports.getProduct = async (req, res) =>{
+
+    try {
+
+        const product = Product.findOne({_id: req.params.id} ,(err, product)=>{
+            if(err) return res.status(500).json("Error in getting product");
+
+           return res.status(200).json({product});
+        })
+
+    } catch (error) {
+        
+    }
+
+}

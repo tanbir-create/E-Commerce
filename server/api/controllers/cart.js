@@ -36,3 +36,46 @@ module.exports.create = async (req, res) =>{
     }
 }
 
+module.exports.deleteItem = async (req, res) => {
+    try {
+        let cart = await Cart.findOne({user: req.user.userId});
+    
+
+        let item = await cart.items.find(i=>i._id == req.params.id);
+        
+        item.remove();
+
+        if(cart.items.length === 0){
+            Cart.deleteOne({_id: cart.id}, (err, deleted)=>{
+                if(err){return status(500).send(err)}
+
+                return res.status(200).json({message: "Cart empty"});
+            });
+            
+        }
+        // console.log(cart.items.length);
+        else{
+            cart.save();
+            return res.status(200).json({success: true});
+        }
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+module.exports.getCart = async (req, res)=> {
+
+  try {
+    let cart = await Cart.findOne({user: req.user.userId});
+    if(!cart){
+        return res.status(200).json("Your cart is empty");
+    }
+    
+    return res.status(200).json({cart});
+
+  } catch (error) {
+      return res.status(500).send(error);
+  }
+
+}
+

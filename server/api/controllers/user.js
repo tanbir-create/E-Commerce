@@ -82,6 +82,17 @@ module.exports.login = async function(req, res){
     }
 }
 
+module.exports.getUser = async (req, res)=>{
+    try {
+        const user = await User.findOne({_id: req.user.userId});
+        return res.status(200).json({
+            name: user.name, email: user.email
+        })
+    } catch (error) {
+        return res.status(500).json("Error in finding user");
+    }
+}
+
 
 
 

@@ -22,5 +22,6 @@ const upload = multer({storage: storage});
 
 router.post('/add', isAuthenticated, sellerMiddleware, upload.array('images', 5), productController.addProduct); 
 router.post('/add-to-cart', isAuthenticated, userMiddleware, cartController.create);
+router.get('/:id', productController.getProduct);
 
 module.exports = router;
